@@ -26,7 +26,7 @@ enum VersionComparison {
 }
 
 impl VersionComparison {
-    fn parse_comparator(input: &str) -> Option<VersionComparison> {
+    fn parse_operator(input: &str) -> Option<VersionComparison> {
         if input.len() < 2 {
             return None;
         }
@@ -85,7 +85,7 @@ mod version_comparison_tests {
     use super::*;
 
     #[test]
-    fn test_parse_comparator() {
+    fn test_parse_operator() {
         struct Data<'a> { q: &'a str, r: Option<VersionComparison>};
         let test_data = [
             Data{q: "", r: None},
