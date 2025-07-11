@@ -34,11 +34,11 @@ impl TryFrom<&str> for FBS {
         }
         let mut bytes = value.bytes();
         while let Some(byte) = bytes.next() {
-            data[i] = byte;
             if i >= 128 {
                 return Err(
                     "The input string has more than 128 characters in it.");
             } else {
+                data[i] = byte;
                 i += 1;
             }
         }
@@ -49,8 +49,8 @@ impl TryFrom<&str> for FBS {
 impl PartialEq for FBS {
     fn eq(&self, other: &Self) -> bool {
         if self.len() == other.len() {
-            for i in (0..self.len()) {
-                if self[i] != other[i] {
+            for i in (self.start..self.len()) {
+                if self[self.start + i] != other[other.start + i] {
                     return false;
                 }
             }
@@ -93,7 +93,7 @@ impl FBS {
         if index >= self.len() {
             return Err("Index is out of bounds.");
         } else {
-            return Ok(&self.data[self.start.add(index)]);
+            return Ok(&self.data[self.start + index]);
         }
     }
 
@@ -175,10 +175,5 @@ mod test {
         let mut subject: FBS = FBS::new();
         // An empty FBS should have a capacity of DATA_SIZE bytes.
         assert_eq!(subject.free_capactiy(), DATA_SIZE);
-    }
-
-    #[test]
-    pub fn test_logic_free_capacity() {
-        fn 
     }
 }
